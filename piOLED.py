@@ -114,25 +114,28 @@ while True:
 
 	#update current hour
     if hour_count != int(D.strftime("%H")):
-        #on hour change, get weather
         hour_count=int(D.strftime("%H"))
-        #get forecast
-        w_data=requests.get("https://worldweather.wmo.int/en/json/"+CityID+"_en.json").json()["city"]["forecast"]["forecastDay"][0]
-        #get City name
-        CITY=requests.get("https://worldweather.wmo.int/en/json/"+CityID+"_en.json").json()["city"]["cityName"]
-        #get today's minimum temperature
-        tMIN=requests.get("https://worldweather.wmo.int/en/json/"+CityID+"_en.json").json()["city"]["forecast"]["forecastDay"][0]["minTemp"]
-        #get today's maximum temperature
-        tMAX=requests.get("https://worldweather.wmo.int/en/json/"+CityID+"_en.json").json()["city"]["forecast"]["forecastDay"][0]["maxTemp"]
-        #get weather icon
-        w_ico=int(str(w_data["weatherIcon"])[:-2])
-        #check day/night icons
-        if (hour_count >= 6 and hour_count < 20) and (w_ico > 20 and w_ico < 25):
-            w_ico=str(w_ico)+"a.png"
-        elif (hour_count < 6 or hour_count >= 20) and (w_ico > 20 and w_ico < 25):
-            w_ico=str(w_ico)+"b.png"
-        else:
-            w_ico=str(w_ico)+".png"
+        #get weather when hour change
+        try:
+            w_data=requests.get("https://worldweather.wmo.int/en/json/"+CityID+"_en.json").json()["city"]["forecast"]["forecastDay"][0]
+            CITY=requests.get("https://worldweather.wmo.int/en/json/"+CityID+"_en.json").json()["city"]["cityName"]
+            tMIN=requests.get("https://worldweather.wmo.int/en/json/"+CityID+"_en.json").json()["city"]["forecast"]["forecastDay"][0]["minTemp"]
+            tMAX=requests.get("https://worldweather.wmo.int/en/json/"+CityID+"_en.json").json()["city"]["forecast"]["forecastDay"][0]["maxTemp"]
+            #weather icon
+            w_ico=int(str(w_data["weatherIcon"])[:-2])
+            #check day/night icons
+            if (hour_count >= 6 and hour_count < 20) and (w_ico > 20 and w_ico < 25):
+                w_ico=str(w_ico)+"a.png"
+            elif (hour_count < 6 or hour_count >= 20) and (w_ico > 20 and w_ico < 25):
+                w_ico=str(w_ico)+"b.png"
+            else:
+                w_ico=str(w_ico)+".png"
+        except:
+	    #Exception for startup connextion errors
+            w_ico="28.png"
+            CITY="------"
+            tMIN="--"
+            tMAX="--"
 
     # Set weather icon file
     image = Image.open("/home/piÑa/Documents/TheCloud/wmo-img/"+w_ico)
