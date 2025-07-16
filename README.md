@@ -1,10 +1,16 @@
 # RaspberryPi-SSD1351-OLED Display
 ![OLED2_small](https://github.com/TheRoam/RaspberryPi-SSD1351-OLED/assets/63456390/af35f47f-3db9-47b6-bc23-2eee57d6306a)
 
+(2025 update)
+
+![oled-fan-s](https://github.com/user-attachments/assets/79b4f238-baef-4087-8bfc-df588fb5a4be)
+
+
 SSD1351 1.5" OLED display python script for Raspberry Pi. Currently displays:
 + Time and date
 + System stats (OS, disk usage and CPU temperature)
 + Local weather from World Meteorological Organization
++ Fan indicator (2025 update)
 
 Based on Adafruit sample guide:
 
